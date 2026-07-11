@@ -1,0 +1,54 @@
+{
+  "name": "starlink-wall",
+  "version": "0.1.0",
+  "description": "A location-aware Starlink constellation instrument for the terminal.",
+  "type": "module",
+  "bin": {
+    "starlink-wall": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "catalog",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepack": "npm run build",
+    "dev": "tsx source/cli.tsx",
+    "start": "node dist/cli.js",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "starlink",
+    "satellite",
+    "sgp4",
+    "terminal",
+    "tui"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyon-industries/starlink-wall.git"
+  },
+  "homepage": "https://github.com/lyon-industries/starlink-wall#readme",
+  "bugs": {
+    "url": "https://github.com/lyon-industries/starlink-wall/issues"
+  },
+  "dependencies": {
+    "ink": "^7.1.0",
+    "react": "^19.2.0",
+    "satellite.js": "^6.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vitest": "^4.0.0"
+  }
+}
