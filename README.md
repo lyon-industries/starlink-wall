@@ -2,11 +2,14 @@
 
 A location-aware constellation instrument for the terminal.
 
-Run one command and leave it on a dedicated screen:
+Install the current release directly from GitHub, then leave it on a dedicated screen:
 
 ```bash
-npx starlink-wall
+npm install --global github:lyon-industries/starlink-wall
+starlink-wall
 ```
+
+The shorter `npx starlink-wall` command will become available with the first npm release.
 
 The first run asks for observer coordinates and saves them locally. Later runs open directly into a full-screen terminal display with:
 
