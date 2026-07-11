@@ -8,6 +8,11 @@ import { loadData } from "./data.js"
 
 const command = process.argv[2]
 
+if (process.argv.includes("--version") || process.argv.includes("-v")) {
+  process.stdout.write("starlink-wall 0.2.0\n")
+  process.exit(0)
+}
+
 if (process.argv.includes("--help") || command === "help") {
   process.stdout.write(`starlink-wall — a location-aware constellation instrument\n\nUsage:\n  starlink-wall          open the live terminal wall\n  starlink-wall setup    set observer coordinates\n  starlink-wall refresh  bypass the local orbital cache once\n\nKeys:\n  q / esc                quit\n`)
   process.exit(0)

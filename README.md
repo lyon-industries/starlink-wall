@@ -35,6 +35,7 @@ starlink-wall          # open the wall
 starlink-wall setup    # change observer coordinates
 starlink-wall refresh  # bypass the local orbital cache once
 starlink-wall --help
+starlink-wall --version
 ```
 
 Inside the wall:
