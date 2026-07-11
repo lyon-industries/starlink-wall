@@ -2,10 +2,10 @@
 
 A location-aware constellation instrument for the terminal.
 
-Install the current release directly from GitHub, then leave it on a dedicated screen:
+Install the current release package from GitHub, then leave it on a dedicated screen:
 
 ```bash
-npm install --global github:lyon-industries/starlink-wall
+npm install --global https://github.com/lyon-industries/starlink-wall/releases/download/v0.1.0/starlink-wall-0.1.0.tgz
 starlink-wall
 ```
 
