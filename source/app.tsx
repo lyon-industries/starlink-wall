@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react"
-import { Box, Text, useApp, useInput, useWindowSize } from "ink"
+import { Box, Text, useApp, useInput } from "ink"
 
 import { measureInternetRtt } from "./network.js"
 import { computeSnapshot, predictPasses, visibilitySeries } from "./orbits.js"
@@ -19,7 +19,7 @@ const colors = {
 
 export function App({ data, observer }: { data: DataSet; observer: Observer }) {
   const { exit } = useApp()
-  const { columns, rows } = useWindowSize()
+  const { columns, rows } = useTerminalSize()
   const [now, setNow] = useState(new Date())
   const [snapshot, setSnapshot] = useState<Snapshot>(() =>
     computeSnapshot(data.satellites, observer),
@@ -243,3 +243,23 @@ function StatusPanel({ data, snapshot, rtt, now, compact = false }: { data: Data
 const formatTime = (date: Date) => date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: false })
 const formatClock = (date: Date) => `${formatTime(date)}:${String(date.getSeconds()).padStart(2, "0")}`
 const formatCoordinates = (observer: Observer) => `${Math.abs(observer.latitude).toFixed(3)}°${observer.latitude >= 0 ? "N" : "S"}  ${Math.abs(observer.longitude).toFixed(3)}°${observer.longitude >= 0 ? "E" : "W"}`
+
+function useTerminalSize(): { columns: number; rows: number } {
+  const [size, setSize] = useState(() => ({
+    columns: process.stdout.columns || 80,
+    rows: process.stdout.rows || 24,
+  }))
+
+  useEffect(() => {
+    const update = () => setSize({
+      columns: process.stdout.columns || 80,
+      rows: process.stdout.rows || 24,
+    })
+    process.stdout.on("resize", update)
+    return () => {
+      process.stdout.off("resize", update)
+    }
+  }, [])
+
+  return size
+}

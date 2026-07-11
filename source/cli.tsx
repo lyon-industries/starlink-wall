@@ -24,8 +24,12 @@ if (command === "setup" || !observer) observer = await promptForObserver(observe
 process.stdout.write("\nAcquiring current Starlink orbital elements…\n")
 const data = await loadData({ force: command === "refresh" })
 
-const instance = render(<App data={data} observer={observer} />, {
-  alternateScreen: true,
-  exitOnCtrlC: true,
-})
-await instance.waitUntilExit()
+process.stdout.write("\u001B[?1049h\u001B[?25l")
+try {
+  const instance = render(<App data={data} observer={observer} />, {
+    exitOnCtrlC: true,
+  })
+  await instance.waitUntilExit()
+} finally {
+  process.stdout.write("\u001B[?25h\u001B[?1049l")
+}

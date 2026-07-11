@@ -9,6 +9,8 @@ npm install --global github:lyon-industries/starlink-wall
 starlink-wall
 ```
 
+Do not add the separate `starlink` npm package to that command; it is unrelated to this project.
+
 The shorter `npx starlink-wall` command will become available with the first npm release.
 
 The first run asks for observer coordinates and saves them locally. Later runs open directly into a full-screen terminal display with:

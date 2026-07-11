@@ -15,7 +15,6 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "prepack": "npm run build",
-    "prepare": "npm run build",
     "dev": "tsx source/cli.tsx",
     "start": "node dist/cli.js",
     "test": "vitest run",
@@ -41,7 +40,7 @@
     "url": "https://github.com/lyon-industries/starlink-wall/issues"
   },
   "dependencies": {
-    "ink": "^7.1.0",
+    "ink": "^6.8.0",
     "react": "^19.2.0",
     "satellite.js": "^6.0.2"
   },
