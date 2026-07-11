@@ -5,7 +5,7 @@ A location-aware constellation instrument for the terminal.
 Install the current release package from GitHub, then leave it on a dedicated screen:
 
 ```bash
-npm install --global https://github.com/lyon-industries/starlink-wall/releases/download/v0.1.0/starlink-wall-0.1.0.tgz
+npm install --global https://github.com/lyon-industries/starlink-wall/releases/download/v0.2.0/starlink-wall-0.2.0.tgz
 starlink-wall
 ```
 
@@ -16,13 +16,17 @@ The shorter `npx starlink-wall` command will become available with the first npm
 The first run asks for observer coordinates and saves them locally. Later runs open directly into a full-screen terminal display with:
 
 - a live polar plot of catalogued Starlink objects above the local horizon;
+- continuous internet-path status with a 10-minute latency graph;
+- current, median and p95 latency, jitter, probe loss and outage duration;
+- local Starlink dish reachability detection at `192.168.100.1`;
 - counts above 0°, 25° and 45° elevation;
 - the highest object, bearing, slant range and orbital altitude;
 - upcoming high passes over the next two hours;
 - a 60-minute local visibility trend;
-- catalog size, propagation health, element age and internet round-trip time.
+- explicit `LEARNING`, `ONLINE`, `WATCH`, `DEGRADED` and `OFFLINE` states;
+- catalog size, propagation health and orbital-element age.
 
-Press `q` or Escape to leave the wall.
+Press `?` for the built-in explanation of every state and key.
 
 ## Commands
 
@@ -33,13 +37,33 @@ starlink-wall refresh  # bypass the local orbital cache once
 starlink-wall --help
 ```
 
+Inside the wall:
+
+```text
+? / h    help
+space    pause or resume all sampling
+r        restart the network probe immediately
+q / esc  close help, then quit
+```
+
 ## What the numbers mean
 
 Starlink Wall propagates public Orbit Mean-Elements Message data with SGP4. It calculates orbital geometry relative to the configured observer.
 
 It does **not** know which satellite a Starlink terminal is using, beam allocation, cell capacity, gateway routing, obstructions, packet loss or service availability. An object above the geometric horizon is not proof of a usable link. The interface labels this boundary deliberately.
 
-The internet RTT measurement is an ordinary HTTPS round trip from the computer running the command. It is not dish latency unless that computer's traffic actually uses the Starlink connection.
+The network panel measures repeated HTTPS round trips from the computer running the command. It includes DNS, TLS, routing and endpoint behavior. It is not dish packet loss or dish latency unless the computer's actual path uses Starlink. The first connection is treated as an unrecorded warm-up, and health classification waits for a meaningful sample window.
+
+Dish detection only checks whether the standard local address responds. It does not authenticate to the dish or read private telemetry. Direct gRPC telemetry remains a separate future integration.
+
+## Interface principles
+
+- Faults and uncertainty are written explicitly; colour is never the only signal.
+- Live path health comes before orbital spectacle.
+- Every metric has a visible time window and source boundary.
+- Standard 80×24 terminals and wide wall displays receive separate compositions.
+- Panels remain spatially stable while values update.
+- Keyboard help is always one key away.
 
 ## Data source and caching
 

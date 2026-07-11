@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { compass, formatAge, skyPlot, sparkline } from "../source/visuals.js"
+import { compass, formatAge, nullableSparkline, skyPlot, sparkline } from "../source/visuals.js"
 
 describe("terminal visuals", () => {
   it("maps bearings to compass points", () => {
@@ -22,5 +22,6 @@ describe("terminal visuals", () => {
   it("creates stable sparklines and ages", () => {
     expect(sparkline([2, 4, 6])).toBe("▁▄█")
     expect(formatAge(new Date("2026-07-11T10:00:00Z"), new Date("2026-07-11T12:30:00Z"))).toBe("2h 30m")
+    expect(nullableSparkline([20, null, 40])).toBe("▁×█")
   })
 })

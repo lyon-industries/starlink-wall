@@ -65,6 +65,19 @@ export function sparkline(values: number[]): string {
     .join("")
 }
 
+export function nullableSparkline(values: Array<number | null>): string {
+  const present = values.filter((value): value is number => value !== null)
+  if (present.length === 0) return values.map(() => "×").join("")
+  const bars = "▁▂▃▄▅▆▇█"
+  const min = Math.min(...present)
+  const max = Math.max(...present)
+  const span = max - min || 1
+  return values.map((value) => {
+    if (value === null) return "×"
+    return bars[Math.min(7, Math.floor(((value - min) / span) * 7))]
+  }).join("")
+}
+
 export function bar(value: number, max: number, width: number): string {
   const filled = Math.max(0, Math.min(width, Math.round((value / Math.max(1, max)) * width)))
   return `${"━".repeat(filled)}${"─".repeat(width - filled)}`
